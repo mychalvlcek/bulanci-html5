@@ -41,6 +41,10 @@ BULANCI.Button.prototype.highlight = function (context, x, y) {
     return (this);
 }
 
+BULANCI.Button.prototype.click = function() {
+    
+}
+
 BULANCI.Button.prototype.draw = function (context, stroke) {
     if(!this.hide) {
         context.save();

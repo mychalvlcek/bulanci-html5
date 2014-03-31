@@ -63,7 +63,7 @@ BULANCI.Shoot.prototype.launch = function(pSpeed, pDirection) {
 BULANCI.Shoot.prototype.updateShoot = function() {
     this.x += this.xDirection * this.speed;
     this.y += this.yDirection * this.speed;
-    if(this.x < 0 || this.y < 0 || this.x > _canvas.width || this.y > _canvas.height) {
+    if(this.x < 0 || this.y < 0 || this.x > canvas.width || this.y > canvas.height) {
         this.isActive = false;
     }
 }

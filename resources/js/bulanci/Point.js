@@ -22,9 +22,6 @@ BULANCI.Point = function(x, y) {
     this.y = y || 0;
 };
 
-// constructor
-BULANCI.Point.prototype.constructor = BULANCI.Point;
-
 BULANCI.Point.prototype.set = function(x, y) {
     this.x = x || 0;
     this.y = y || ( (y !== 0) ? this.x : 0 ) ;
