@@ -33,10 +33,6 @@ BULANCI.RoundedLabel.prototype.show = function() {
     this.hide = false;
 };
 
-BULANCI.RoundedLabel.prototype.clone = function() {
-    return new BULANCI.RoundedLabel(this.text, this.x, this.y, this.width, this.height, this.radius, this.stroke);
-};
-
 BULANCI.RoundedLabel.prototype.contains = function(x, y) {
     return (x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height);
 };
@@ -90,5 +86,3 @@ BULANCI.RoundedLabel.prototype.draw = function (context, stroke) {
         context.restore();
     }
 }
-
-BULANCI.RoundedLabel.prototype.constructor = BULANCI.RoundedLabel;

@@ -5,95 +5,103 @@
 * @author Michal Vlcek <vlcekmichal@yahoo.com>
 */
 BULANCI.Shoot = function(x, y) {
-    var x = x;
-    var y = y;
-    var direction;
-    var xDirection = 0;
-    var yDirection = 0;
+    this.x = x;
+    this.y = y;
+    this.direction;
+    this.xDirection = 0;
+    this.yDirection = 0;
 
-    var width = 10;
-    var height = 4;
+    this.width = 10;
+    this.height = 4;
 
-    var isActive = true;
-    var updateTimer;
+    this.isActive = true;
+    this.updateTimer;
 
-    var speed = 2;
+    this.speed = 2;
 
-    //var bullets = []; // for more sophisticated weapons, Bullet class?
+    //this.bullets = []; // for more sophisticated weapons, Bullet class?
 
-    updateTimer = setInterval(updateShoot, 1000/30);
-            
-    this.launch = function(pSpeed, pDirection) {
-        speed = pSpeed;
-        direction = pDirection;
-        switch (pDirection) {
-            case 1:
-                xDirection = -1;
-                x -= 10;
-                y += 43;
-                break;
-            case 3:
-                xDirection = 1;
-                x += 55;
-                y += 22;
-                break;
-            case 2:
-                yDirection = -1;
-                var oldWidth = width;
-                width = height;
-                height = oldWidth;
+    this.updateTimer = setInterval(this.updateShoot.bind(this), 1000/30);
+}
 
-                x += 18;
-                y -= 10;
-                break;
-            case 4:
-                yDirection = 1;
-                var oldWidth = width;
-                width = height;
-                height = oldWidth;
+BULANCI.Shoot.prototype.launch = function(pSpeed, pDirection) {
+    this.speed = pSpeed;
+    this.direction = pDirection;
+    switch (this.direction) {
+        case 1:
+            this.xDirection = -1;
+            this.x -= 10;
+            this.y += 43;
+            break;
+        case 3:
+            this.xDirection = 1;
+            this.x += 55;
+            this.y += 22;
+            break;
+        case 2:
+            this.yDirection = -1;
+            var oldWidth = this.width;
+            this.width = this.height;
+            this.height = oldWidth;
 
-                x += 34;
-                y += 60;
-                break;
-        }
+            this.x += 18;
+            this.y -= 10;
+            break;
+        case 4:
+            this.yDirection = 1;
+            var oldWidth = this.width;
+            this.width = this.height;
+            this.height = oldWidth;
 
+            this.x += 34;
+            this.y += 60;
+            break;
     }
 
-    function updateShoot() {
-        x += xDirection * speed;
-        y += yDirection * speed;
-        if(x < 0 || y < 0 || x > _canvas.width || y > _canvas.height) {
-            isActive = false;
-        }
+}
+
+BULANCI.Shoot.prototype.updateShoot = function() {
+    this.x += this.xDirection * this.speed;
+    this.y += this.yDirection * this.speed;
+    if(this.x < 0 || this.y < 0 || this.x > _canvas.width || this.y > _canvas.height) {
+        this.isActive = false;
     }
+}
 
-    this.draw = function(context) {
-        //bullet
-        context.fillStyle = '#ffd649';
-        context.fillRect(x,y,width,height);
-        context.beginPath();
-        context.lineWidth='0.8';
-        context.strokeStyle= 'rgba(0,0,0,0.8)';
-        context.rect(x,y,width,height);
-        context.stroke();
-        // shadow
-        context.fillStyle = 'rgba(0,0,0,0.1)';
-        context.fillRect(x,y+6,width,height);
-    }
+BULANCI.Shoot.prototype.draw = function(context) {
+    //bullet
+    context.fillStyle = '#ffd649';
+    context.fillRect(this.x,this.y,this.width,this.height);
+    context.beginPath();
+    context.lineWidth='0.8';
+    context.strokeStyle= 'rgba(0,0,0,0.8)';
+    context.rect(this.x,this.y,this.width,this.height);
+    context.stroke();
+    // shadow
+    context.fillStyle = 'rgba(0,0,0,0.1)';
+    context.fillRect(this.x,this.y+6,this.width,this.height);
+}
 
-    this.getX = function() { return x; }
+BULANCI.Shoot.prototype.getX = function() {
+    return this.x;
+}
 
-    this.setX = function(pX) { x = pX; }
+BULANCI.Shoot.prototype.setX = function(x) {
+    this.x = x;
+}
 
-    this.getY = function() { return y; }
+BULANCI.Shoot.prototype.getY = function() {
+    return this.y;
+}
 
-    this.setY = function(pY) { y = pY; }
+BULANCI.Shoot.prototype.setY = function(y) {
+    this.y = y;
+}
 
-    this.setIsActive = function(a) {
-        isActive = a;
-    }
+BULANCI.Shoot.prototype.setIsActive = function(isActive) {
+    this.isActive = isActive;
+}
 
-    this.getIsActive = function() {
-        return isActive;
-    }
+BULANCI.Shoot.prototype.getIsActive = function() {
+    return this.isActive;
 }

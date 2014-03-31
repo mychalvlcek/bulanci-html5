@@ -22,16 +22,6 @@ BULANCI.Point = function(x, y) {
     this.y = y || 0;
 };
 
-/**
- * Creates a clone of this point
- *
- * @method clone
- * @return {Point} a copy of the point
- */
-BULANCI.Point.prototype.clone = function() {
-    return new BULANCI.Point(this.x, this.y);
-};
-
 // constructor
 BULANCI.Point.prototype.constructor = BULANCI.Point;
 

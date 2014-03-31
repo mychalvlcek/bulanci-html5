@@ -7,10 +7,6 @@ BULANCI.TextLabel = function(x, y, text) {
     this.color = color || 'rgba(230,230,230,1)';
 };
 
-BULANCI.TextLabel.prototype.clone = function() {
-    return new BULANCI.TextLabel(this.x, this.y, this.text);
-};
-
 BULANCI.TextLabel.prototype.draw = function (context, stroke) {
     // font
     context.font = this.font;
@@ -21,5 +17,3 @@ BULANCI.TextLabel.prototype.draw = function (context, stroke) {
 
     context.fillText(this.text, this.x, this.y);
 }
-
-BULANCI.TextLabel.prototype.constructor = BULANCI.TextLabel;

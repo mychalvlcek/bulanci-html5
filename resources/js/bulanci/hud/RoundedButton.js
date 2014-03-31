@@ -33,10 +33,6 @@ BULANCI.RoundedButton.prototype.show = function() {
     this.hide = false;
 };
 
-BULANCI.RoundedButton.prototype.clone = function() {
-    return new BULANCI.RoundedButton(this.text, this.x, this.y, this.width, this.height, this.radius, this.stroke);
-};
-
 BULANCI.RoundedButton.prototype.contains = function(x, y) {
     return (x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height);
 };
@@ -90,5 +86,3 @@ BULANCI.RoundedButton.prototype.draw = function (context, stroke) {
         context.restore();
     }
 }
-
-BULANCI.RoundedButton.prototype.constructor = BULANCI.RoundedButton;
