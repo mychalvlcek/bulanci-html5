@@ -1,0 +1,119 @@
+/* MARGIN / PADDING */
+.gen-margin(2em);
+
+.gen-margin(@size) when (@size > 0) {
+    .margin-@{size} {
+        margin: @size;
+    }
+    .gen-margin((@size - 1));
+}
+
+.gen-padding(2em);
+
+.gen-padding(@size) when (@size > 0) {
+    .padding-@{size} {
+        margin: @size;
+    }
+    .gen-padding((@size - 1));
+}
+
+/* TYPOGRAPHY */
+.b {
+    font-weight: bold;
+}
+.i {
+    font-style: italic;
+}
+.code {
+    font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
+/* FONT SIZE */
+.gen-font-size(20);
+
+.gen-font-size(@size) when (@size > 8) {
+    .size-@{size} {
+        font-size: unit(@size, px);;
+    }
+    .gen-font-size((@size - 1));
+}
+
+/* DISPLAYING */
+.block { display: block; }
+.inline-block { display: inline-block; }
+.inline { display: inline; }
+.hide { display: none; }
+.invisible { visibility: hidden; }
+
+/* WIDTH */
+.gen-width(600);
+.gen-width(@size) when (@size >= 100) {
+    /* width */
+    .w-@{size} {
+        width: unit(@size, px);
+    }
+    .gen-width((@size - 50));
+}
+/* SMALL WIDTH */
+.gen-small-width(90);
+.gen-small-width(@size) when (@size > 0) {
+    .w-@{size} {
+        width: unit(@size, px);
+    }
+    .gen-small-width((@size - 10));
+}
+.w-100per { width: 100%; }
+
+/* FLOATING */
+.float-left { float: left; }
+.float-right { float: right; }
+.clear-left { clear: left; }
+.clear-right { clear: right; }
+.clear { clear: both; }
+/* ALIGNING */
+.left { text-align: left !important; }
+.center { text-align: center !important; }
+.right { text-align: right !important; }
+.v-top { vertical-align: top; }
+.v-center { vertical-align: center; }
+.v-bottom { vertical-align: bottom; }
+
+/* COLORING */
+.white { color: #ffffff; }
+.black { color: #000000; }
+.red { color: #ff0000; }
+.blue { color: #0000ff; }
+.yellow { color: yellow; }
+.orange {color: #ff8800; }
+.green { color: #468847; }
+
+/* tooltip */
+a.tooltip[title] {
+    position: relative;
+
+    &:before { 
+        content: attr(title);
+        display: none;
+        position: absolute;
+        left: 0;
+        bottom: 3em;
+        font-size: 12px;
+        line-height: 1.4;
+        opacity: 0.85;
+        filter: alpha(opacity=85);
+        padding: 4px 10px;
+        text-align: center;
+        text-decoration: none;
+        color: #eeeeee;
+        background-color: #000000;
+        border-radius: 4px;
+        -moz-box-shadow: 0 0 2px #000000;
+        -webkit-box-shadow: 0 0 2px #000000;
+        box-shadow: 0 0 2px #000000;
+        z-index: 100;
+    }
+
+    &:hover:before {
+        display: block;
+    }
+}

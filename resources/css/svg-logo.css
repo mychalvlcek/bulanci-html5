@@ -1,0 +1,17 @@
+svg#bulanci-logo {
+  width: 260px;
+  height: 140px;
+}
+svg#bulanci-logo .black {
+  fill: #222222;
+}
+svg#bulanci-logo .white {
+  fill: #FFFFFF;
+}
+svg#bulanci-logo .transparent {
+  fill-opacity: 0.0;
+}
+svg#bulanci-logo path {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+}
