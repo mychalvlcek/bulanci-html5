@@ -1,4 +1,4 @@
 bulanci-online
 ==============
 
-Bulánci - online verze
+Bulánci - online html5 verze v prohlížeči
