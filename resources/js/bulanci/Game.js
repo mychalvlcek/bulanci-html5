@@ -39,6 +39,7 @@ BULANCI.Game = function(debug) {
 
     this.map;
     this.players = [];
+    // terrain
 
     this.elementList = [];
     this.hud = [];
@@ -156,57 +157,57 @@ BULANCI.Game.prototype.update = function() {
         this.redraw();
     } else {
         // END GAME
-        map.draw(context, images);
-        context.rect(0, 0, width, height);
-        context.fillStyle = 'rgba(0,0,0,0.8)';
-        context.fill();
+        this.map.draw(this.context, this.images);
+        this.context.rect(0, 0, this.width, this.height);
+        this.context.fillStyle = 'rgba(0,0,0,0.8)';
+        this.context.fill();
 
-        context.font = '20px "Helvetica"';
-        context.fillStyle = 'rgba(230,230,230,1)';
-        context.fontWeight = '300';
-        context.textAlign = 'center';
-        context.textBaseline = 'middle';
+        this.context.font = '20px "Helvetica"';
+        this.context.fillStyle = 'rgba(230,230,230,1)';
+        this.context.fontWeight = '300';
+        this.context.textAlign = 'center';
+        this.context.textBaseline = 'middle';
 
-        context.fillText('Game over!', width / 2, height / 2 - 50);
+        this.context.fillText('Game over!', this.width / 2, this.height / 2 - 50);
 
-        context.beginPath();
-        context.rect(width / 2 - 100, height / 2, 200, 100);
-        context.strokeStyle = 'rgb(120,120,120)';
-        context.lineWidth = 2;
-        context.stroke();
+        this.context.beginPath();
+        this.context.rect(this.width / 2 - 100, this.height / 2, 200, 100);
+        this.context.strokeStyle = 'rgb(120,120,120)';
+        this.context.lineWidth = 2;
+        this.context.stroke();
 
-        context.fillText('Play again?', width / 2, height / 2 + 50);
+        this.context.fillText('Play again?', this.width / 2, this.height / 2 + 50);
 
-        heightRatio = height / 3;
-        context.font = '30px "Helvetica"';
+        heightRatio = this.height / 3;
+        this.context.font = '30px "Helvetica"';
 
-        var totalScore = players[0].getScore() + players[1].getScore();
-        var score1Height = players[0].getScore() * (heightRatio/totalScore);
-        var score2Height = players[1].getScore() * (heightRatio/totalScore);
+        var totalScore = this.players[0].getScore() + this.players[1].getScore();
+        var score1Height = this.players[0].getScore() * (heightRatio/totalScore);
+        var score2Height = this.players[1].getScore() * (heightRatio/totalScore);
         // score 1
-        context.beginPath();
-        context.rect(width / 4 - 50, height / 5 * 3, 100, -1 * score1Height );
-        context.strokeStyle = 'rgba(255,0,0,0.8)';
-        context.lineWidth = 2;
-        context.stroke();
-        context.fillStyle = 'rgba(255,0,0,0.2)';
-        context.fill();
+        this.context.beginPath();
+        this.context.rect(this.width / 4 - 50, this.height / 5 * 3, 100, -1 * score1Height );
+        this.context.strokeStyle = 'rgba(255,0,0,0.8)';
+        this.context.lineWidth = 2;
+        this.context.stroke();
+        this.context.fillStyle = 'rgba(255,0,0,0.2)';
+        this.context.fill();
 
-        context.fillStyle = 'rgba(255,0,0,0.5)';
-        context.fillText(players[0].getScore(), width / 4, height / 4 * 3 );
+        this.context.fillStyle = 'rgba(255,0,0,0.5)';
+        this.context.fillText(this.players[0].getScore(), this.width / 4, this.height / 4 * 3 );
 
         // score 2
-        heightRatio = height / 3;
-        context.beginPath();
-        context.rect(width / 4 * 3 - 50, height / 5 * 3, 100, -1 * score2Height );
-        context.strokeStyle = 'rgba(0,0,255,0.8)';
-        context.lineWidth = 2;
-        context.stroke();
-        context.fillStyle = 'rgba(0,0,255,0.2)';
-        context.fill();
+        heightRatio = this.height / 3;
+        this.context.beginPath();
+        this.context.rect(this.width / 4 * 3 - 50, this.height / 5 * 3, 100, -1 * score2Height );
+        this.context.strokeStyle = 'rgba(0,0,255,0.8)';
+        this.context.lineWidth = 2;
+        this.context.stroke();
+        this.context.fillStyle = 'rgba(0,0,255,0.2)';
+        this.context.fill();
 
-        context.fillStyle = 'rgba(0,0,255,0.5)';
-        context.fillText(players[1].getScore(), width / 4 * 3, height / 4 * 3 );
+        this.context.fillStyle = 'rgba(0,0,255,0.5)';
+        this.context.fillText(this.players[1].getScore(), this.width / 4 * 3, this.height / 4 * 3 );
     }
           
 }
@@ -297,10 +298,10 @@ BULANCI.Game.prototype.keyBind = function() {
             this.players[0].shoot(i);
         }
         if(i >= 37 && i <= 40) { // arrows
-            this.players[1].move(directions[i], this.canvas);
+            this.players[1].move(directions[i], this.canvas, this.players[0]);
         }
         if(i == 65 || i == 68 || i == 83 || i == 87) { // WSAD
-            this.players[0].move(directions[i], this.canvas);
+            this.players[0].move(directions[i], this.canvas, this.players[1]);
         }
 
     }

@@ -54,7 +54,13 @@ BULANCI.Player.prototype.spawn = function(maxWidth, maxHeight) {
     this.isAlive = true;
 }
 
-BULANCI.Player.prototype.move = function(key, canvas) {
+BULANCI.Player.prototype.move = function(key, canvas, anotherPlayer) {
+    if(this.crashedWith(anotherPlayer.x, anotherPlayer.y)) {
+        console.log('crashed');
+    } else {
+        console.log('nocrashed');
+    }
+
     if(this.isAlive) {
         this.direction = key;
         this.spritePosition = (this.spritePosition  < 700)?this.spritePosition + 95 : 0; // position for animation sprite image
@@ -78,6 +84,16 @@ BULANCI.Player.prototype.move = function(key, canvas) {
                 break;
         }
     }
+}
+
+BULANCI.Player.prototype.crashedWith = function(x1, y1) {
+    if(x1 >= this.x && x1 <= this.x + this.width) {
+
+        if(y1 >= (this.y+5) && y1 <= (this.y+5) + this.height) {
+            return true;
+        }
+    }
+    return false;
 }
 
 BULANCI.Player.prototype.activeShooting = function() {
