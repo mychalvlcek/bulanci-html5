@@ -121,19 +121,19 @@ BULANCI.Player.prototype.draw = function(context, images, ratio) {
 
     switch (this.direction) {
         case 1:
-            //context.drawImage(images["bulanek/bulanek"],0,0,60,90,x,y,60,90);
-            context.drawImage(images["bulanek/left"], this.x, this.y);
+            //context.drawImage(images["bulanek/bulanek"],0,0,60,90,this.x,this.y,60,90);
+            context.drawImage(images["bulanek/left.png"], this.x, this.y);
             //context.drawImage(images["bulanek/left-sprite"],spritePosition,0,94,94,x,y,94,94);
             break;
         case 3:
             //context.drawImage(images["bulanek/bulanek"],60,0,60,90,x,y,60,90);
-            context.drawImage(images["bulanek/right"], this.x, this.y);
+            context.drawImage(images["bulanek/right.png"], this.x, this.y);
             break;
         case 2:
-            context.drawImage(images["bulanek/back"], this.x, this.y);
+            context.drawImage(images["bulanek/back.png"], this.x, this.y);
             break;
         case 4:
-            context.drawImage(images["bulanek/front"], this.x, this.y);
+            context.drawImage(images["bulanek/front.png"], this.x, this.y);
             break;
     }
 }

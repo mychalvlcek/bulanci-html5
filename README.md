@@ -1,7 +1,7 @@
 bulanci-html5
 ==============
 
-Bulánci - online html5 verze v prohlížeči
+Bulánci - online html5 version (school project)
 
 dropbox sources: [https://www.dropbox.com/sh/w6ck6lnvz3dll0e/yCcliFFJCX](https://www.dropbox.com/sh/w6ck6lnvz3dll0e/yCcliFFJCX)
 

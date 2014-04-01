@@ -13,8 +13,6 @@ BULANCI.Game = function(debug) {
     this.mouseX;
     this.mouseY;
 
-    this.imagePath = 'resources/images/';
-
     this.width = 0;
     this.initWidth = 0;
     this.height = 0;
@@ -31,19 +29,18 @@ BULANCI.Game = function(debug) {
     this.gametime = 90; // sec
     this.remainingTime = 90;
 
-    this.level = 1;
-    this.maxLevel = 10;
     this.speed = 15;
     
+    this.imagePath = 'resources/images/';
+    this.resources = [];
     this.images = []; // resources
     this.curLoadResNum = 0;
-    this.totalLoadResources = 16;
-
-    this.elementList = [];
+    this.totalLoadResources = 7;
 
     this.map;
     this.players = [];
 
+    this.elementList = [];
     this.hud = [];
 }
 
@@ -66,36 +63,34 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     this.context = this.canvas.getContext('2d');
     this.context.font = 'bold 12px "Helvetica Neue"';
     this.clearCanvas();
-    try {
-        this.context.fillText("loading...", this.width/2, this.height/3);
-    } catch (ex) {
 
-    }
+    this.context.fillText("loading...", this.width/2, this.height/3);
     
     // Load images
-    this.loadImage("legs");
-    this.loadImage("torso");
-    this.loadImage("head");
-    this.loadImage("hair");
-    this.loadImage("leftArm");
-    this.loadImage("rightArm");
-    this.loadImage("leftArm-jump");
-    this.loadImage("legs-jump");
-    this.loadImage("rightArm-jump");
     // bulanek
-    this.loadImage('bulanek/front');
-    this.loadImage('bulanek/back');
-    this.loadImage('bulanek/left');
-    this.loadImage('bulanek/right');
+    this.resources.push('bulanek/front.png');
+    this.resources.push('bulanek/back.png');
+    this.resources.push('bulanek/left.png');
+    this.resources.push('bulanek/right.png');
 
-    this.loadImage('bulanek/bulanek');
-    this.loadImage('bulanek/left-sprite');
+    this.resources.push('bulanek/bulanek.png');
 
-    this.loadImage('grass');
+    this.resources.push('grass.jpg');
 
-    //this.keyboardCapture();
-    document.addEventListener('keydown', this.keyboardCapture.bind(this));
-    document.addEventListener('keyup', this.keyboardUncapture.bind(this));
+    this.loadImages();
+
+    // this.loadImage('bulanek/front');
+    // this.loadImage('bulanek/back');
+    // this.loadImage('bulanek/left');
+    // this.loadImage('bulanek/right');
+
+    // this.loadImage('bulanek/bulanek');
+    // this.loadImage('bulanek/left-sprite');
+    // // background
+    // this.loadImage('grass');
+
+    document.addEventListener('keydown', this.keyboardPressed.bind(this));
+    document.addEventListener('keyup', this.keyboardUnpressed.bind(this));
 
     // new BULANCI.Map()
     this.map = new BULANCI.Background();
@@ -323,10 +318,11 @@ BULANCI.Game.prototype.end = function() {
     // fpsInterval = setInterval(updateFPS, 1000);
 }
 
-// start game after resources are fully loaded
+/**
+ * start game after resources are fully loaded
+ */
 BULANCI.Game.prototype.resourceLoaded = function() {
-    if(++this.curLoadResNum == this.totalLoadResources) {
-        console.log('start');
+    if(++this.curLoadResNum == this.resources.length) {
         this.start();
     }
 }
@@ -345,40 +341,46 @@ BULANCI.Game.prototype.loadImage = function(name) {
     }
 }
 
+/**
+ * loading resource images
+ */
+BULANCI.Game.prototype.loadImages = function() {
+    for(i = 0; i < this.resources.length; i++) {
+        var name = this.resources[i];
+        this.images[name] = new Image();
+        this.images[name].onload = this.resourceLoaded();
+        this.images[name].src = this.imagePath + name;
+    }
+}
+
 BULANCI.Game.prototype.updateFPS = function() {
     this.curFPS = this.numFramesDrawn;
     this.numFramesDrawn = 0;
-    //if(this.remainingTime > 0)
+    if(this.remainingTime > 0)
         this.remainingTime--;
 }
 
-BULANCI.Game.prototype.keyboardCapture = function(e) {
-    //document.addEventListener('keydown', this.clickHandler.bind(this));
-    //document.onkeydown = function (e) {
-        var e = e || window.event;
-        var arrows = [37, 38, 39, 40];
-        if(arrows.indexOf(e.keyCode) != -1) {
-            delete this.keys[37];
-            delete this.keys[38];
-            delete this.keys[39];
-            delete this.keys[40];
-        }
-        var wasd = [65, 68, 83, 87];
-        if(wasd.indexOf(e.keyCode) != -1) {
-            delete this.keys[65];
-            delete this.keys[68];
-            delete this.keys[83];
-            delete this.keys[87];
-        }
-        this.keys[e.keyCode] = e.type == 'keydown';
-    //}
-
-    // document.onkeyup = function (e) {
-    //     delete this.keys[e.keyCode];
-    // }
+BULANCI.Game.prototype.keyboardPressed = function(e) {
+    var e = e || window.event;
+    var arrows = [37, 38, 39, 40];
+    if(arrows.indexOf(e.keyCode) != -1) {
+        delete this.keys[37];
+        delete this.keys[38];
+        delete this.keys[39];
+        delete this.keys[40];
+    }
+    var wasd = [65, 68, 83, 87];
+    if(wasd.indexOf(e.keyCode) != -1) {
+        delete this.keys[65];
+        delete this.keys[68];
+        delete this.keys[83];
+        delete this.keys[87];
+    }
+    this.keys[e.keyCode] = e.type == 'keydown';
 }
 
-BULANCI.Game.prototype.keyboardUncapture = function(e) {
+BULANCI.Game.prototype.keyboardUnpressed = function(e) {
+    var e = e || window.event;
     delete this.keys[e.keyCode];
 }
 
