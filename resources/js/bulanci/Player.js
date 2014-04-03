@@ -54,43 +54,41 @@ BULANCI.Player.prototype.spawn = function(maxWidth, maxHeight) {
     this.isAlive = true;
 }
 
-BULANCI.Player.prototype.move = function(key, canvas, anotherPlayer) {
-    if(this.crashedWith(anotherPlayer.x, anotherPlayer.y)) {
-        console.log('crashed');
-    } else {
-        console.log('nocrashed');
-    }
-
+BULANCI.Player.prototype.move = function(key, canvas, obstacles) {
     if(this.isAlive) {
         this.direction = key;
         this.spritePosition = (this.spritePosition  < 700)?this.spritePosition + 95 : 0; // position for animation sprite image
 
         switch (this.direction) {
             case 1:
-                if(this.x > 0)
+                if(this.x > 0 && !this.hasCollision(this.x - this.moveInc, this.y, obstacles))
                     this.x -= this.moveInc;
                 break;
             case 3:
-                if(this.x < canvas.width - 50 )
+                if(this.x < canvas.width - 50 && !this.hasCollision(this.x + this.moveInc, this.y, obstacles))
                     this.x += this.moveInc;
                 break;
             case 2:
-                if(this.y > 0)
+                if(this.y > 0 && !this.hasCollision(this.x, this.y - this.moveInc, obstacles))
                     this.y -= this.moveInc;
                 break;
             case 4:
-                if(this.y < canvas.height-50 )
+                if(this.y < canvas.height-50 && !this.hasCollision(this.x, this.y + this.moveInc, obstacles))
                     this.y += this.moveInc;
                 break;
         }
     }
 }
 
-BULANCI.Player.prototype.crashedWith = function(x1, y1) {
-    if(x1 >= this.x && x1 <= this.x + this.width) {
-
-        if(y1 >= (this.y+5) && y1 <= (this.y+5) + this.height) {
-            return true;
+BULANCI.Player.prototype.hasCollision = function(x, y, obstacles) {
+    for(i = 0; i < obstacles.length; i++) {
+        var r = obstacles[i];
+        console.log(this == r);
+        if(this != r) {
+            if ( x + this.width < r.x || r.x + r.width < x || y + this.height < r.y || r.y + r.height < y ) {
+            } else {
+                return true;
+            }
         }
     }
     return false;

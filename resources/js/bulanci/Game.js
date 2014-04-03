@@ -96,7 +96,7 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     // new BULANCI.Map()
     this.map = new BULANCI.Background();
 
-    this.elementList.push(this.map);
+    // this.elementList.push(this.map);
 
     var bulanek = new BULANCI.Player();
     bulanek.spawn(this.width, this.height);
@@ -107,7 +107,7 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     bulanek.setY(Math.random() * (this.height - 150) + 50);
     this.players.push(bulanek);
 
-    this.elementList.concat(this.players);
+    this.elementList = this.elementList.concat(this.players);
 
     // HUD
     this.hud = new BULANCI.HUD();
@@ -215,12 +215,11 @@ BULANCI.Game.prototype.update = function() {
 BULANCI.Game.prototype.redraw = function() {
     this.clearCanvas();
     // redraw map
-    //console.log(this);
     this.map.draw(this.context, this.images);
 
     if(this.remainingTime > 0) {
         // redraw hud
-        //hud.redraw(context);
+        // hud.redraw(context);
         this.hud.elements['score1'].redraw(this.context, 'score: ' + this.players[0].getScore(), 20, this.height-50);
         this.hud.elements['score2'].redraw(this.context, 'score: ' + this.players[1].getScore(), 140, this.height-50);
         this.hud.elements['pause_btn'].redraw(this.context, '', this.width-120, this.height-50);
@@ -298,10 +297,10 @@ BULANCI.Game.prototype.keyBind = function() {
             this.players[0].shoot(i);
         }
         if(i >= 37 && i <= 40) { // arrows
-            this.players[1].move(directions[i], this.canvas, this.players[0]);
+            this.players[1].move(directions[i], this.canvas, this.elementList);
         }
         if(i == 65 || i == 68 || i == 83 || i == 87) { // WSAD
-            this.players[0].move(directions[i], this.canvas, this.players[1]);
+            this.players[0].move(directions[i], this.canvas, this.elementList);
         }
 
     }
@@ -333,7 +332,6 @@ BULANCI.Game.prototype.resourceLoaded = function() {
  */
 BULANCI.Game.prototype.loadImage = function(name) {
     this.images[name] = new Image();
-    //this.images[name].onload = function() { this.resourceLoaded(); }
     this.images[name].onload = this.resourceLoaded();
     if(name == 'grass') {
         this.images[name].src = this.imagePath + name + '.jpg';
