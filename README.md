@@ -9,7 +9,7 @@ dropbox sources: [https://www.dropbox.com/sh/w6ck6lnvz3dll0e/yCcliFFJCX](https:/
 * unzip & doubleclick ``` index.html ```
 
 ## TODO
-* barevnost bulanku
+* barevnost bulanku (multi images vs. [one image](http://www.html5canvastutorials.com/advanced/html5-canvas-invert-image-colors-tutorial/))
 * ~~kolize (hracu mezi sebou)~~
 * zpresnit hitbox
 * nahodne prekazky v mape

@@ -5,7 +5,7 @@
  * @constructor
  * @author Michal Vlcek <vlcekmichal@yahoo.com>
  */
-BULANCI.Player = function() {
+BULANCI.Player = function(suffix) {
     // coordinates
     this.x = 50;
     this.y = 50;
@@ -19,6 +19,7 @@ BULANCI.Player = function() {
     this.moveInc = 8; // moving increment (in pixels)
 
     this.spritePosition = 0;
+    this.imageSuffix = suffix || '';
 
     this.isAlive = true; // is player alive?
 
@@ -135,19 +136,19 @@ BULANCI.Player.prototype.draw = function(context, images, ratio) {
 
     switch (this.direction) {
         case 1:
-            //context.drawImage(images["bulanek/bulanek"],0,0,60,90,this.x,this.y,60,90);
-            context.drawImage(images["bulanek/left.png"], this.x, this.y);
+            //context.drawImage(images["bulanek/bulanek.png"],0,0,60,90,this.x,this.y,60,90);
+            context.drawImage(images["bulanek/left" + this.imageSuffix + ".png"], this.x, this.y);
             //context.drawImage(images["bulanek/left-sprite"],spritePosition,0,94,94,x,y,94,94);
             break;
         case 3:
-            //context.drawImage(images["bulanek/bulanek"],60,0,60,90,x,y,60,90);
-            context.drawImage(images["bulanek/right.png"], this.x, this.y);
+            //context.drawImage(images["bulanek/bulanek.png"],60,0,60,90,this.x,this.y,60,90);
+            context.drawImage(images["bulanek/right" + this.imageSuffix + ".png"], this.x, this.y);
             break;
         case 2:
-            context.drawImage(images["bulanek/back.png"], this.x, this.y);
+            context.drawImage(images["bulanek/back" + this.imageSuffix + ".png"], this.x, this.y);
             break;
         case 4:
-            context.drawImage(images["bulanek/front.png"], this.x, this.y);
+            context.drawImage(images["bulanek/front" + this.imageSuffix + ".png"], this.x, this.y);
             break;
     }
 }

@@ -15,9 +15,7 @@ BULANCI.Game = function(debug) {
     this.mouseY;
 
     this.width = 0;
-    this.initWidth = 0;
     this.height = 0;
-    this.ratio = 1;
     
     this.keys = []; // keyboard keys
 
@@ -49,7 +47,6 @@ BULANCI.Game = function(debug) {
 BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     this.width = pCanvas;
     this.height = pheight;
-    this.initWidth = this.width;
 
     // Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
     this.canvas = document.createElement('canvas');
@@ -75,21 +72,21 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     this.resources.push('bulanek/left.png');
     this.resources.push('bulanek/right.png');
 
+    this.resources.push('bulanek/front-blue.png');
+    this.resources.push('bulanek/back-blue.png');
+    this.resources.push('bulanek/left-blue.png');
+    this.resources.push('bulanek/right-blue.png');
+
+    this.resources.push('bulanek/front-red.png');
+    this.resources.push('bulanek/back-red.png');
+    this.resources.push('bulanek/left-red.png');
+    this.resources.push('bulanek/right-red.png');
+
     this.resources.push('bulanek/bulanek.png');
 
     this.resources.push('grass.jpg');
 
     this.loadImages();
-
-    // this.loadImage('bulanek/front');
-    // this.loadImage('bulanek/back');
-    // this.loadImage('bulanek/left');
-    // this.loadImage('bulanek/right');
-
-    // this.loadImage('bulanek/bulanek');
-    // this.loadImage('bulanek/left-sprite');
-    // // background
-    // this.loadImage('grass');
 
     document.addEventListener('keydown', this.keyboardPressed.bind(this));
     document.addEventListener('keyup', this.keyboardUnpressed.bind(this));
@@ -99,11 +96,11 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
 
     // this.elementList.push(this.map);
 
-    var bulanek = new BULANCI.Player();
+    var bulanek = new BULANCI.Player('-red');
     bulanek.spawn(this.width, this.height);
     this.players.push(bulanek);
     
-    bulanek = new BULANCI.Player();
+    bulanek = new BULANCI.Player('-blue');
     bulanek.setX(Math.random() * (this.width - 150) + 50);
     bulanek.setY(Math.random() * (this.height - 150) + 50);
     this.players.push(bulanek);
@@ -325,19 +322,6 @@ BULANCI.Game.prototype.end = function() {
 BULANCI.Game.prototype.resourceLoaded = function() {
     if(++this.curLoadResNum == this.resources.length) {
         this.start();
-    }
-}
-
-/**
- * loading resource images
- */
-BULANCI.Game.prototype.loadImage = function(name) {
-    this.images[name] = new Image();
-    this.images[name].onload = this.resourceLoaded();
-    if(name == 'grass') {
-        this.images[name].src = this.imagePath + name + '.jpg';
-    } else {
-        this.images[name].src = this.imagePath + name + '.png';
     }
 }
 
