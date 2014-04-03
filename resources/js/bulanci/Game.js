@@ -1,9 +1,10 @@
 /**
-* Game
-* @class Game
-* @constructor
-* @author Michal Vlcek <vlcekmichal@yahoo.com>
-*/
+ * Game
+ *
+ * @class Game
+ * @constructor
+ * @author Michal Vlcek <vlcekmichal@yahoo.com>
+ */
 BULANCI.Game = function(debug) {
     this.debug = debug;
 

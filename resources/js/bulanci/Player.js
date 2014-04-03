@@ -273,13 +273,21 @@ BULANCI.Player.prototype.isShootedBy = function(x1, y1) {
     return false;
 }
 
-BULANCI.Player.prototype.getX = function() { return this.x; }
+BULANCI.Player.prototype.getX = function() {
+    return this.x;
+}
 
-BULANCI.Player.prototype.setX = function(pX) { this.x = pX; }
+BULANCI.Player.prototype.setX = function(x) {
+    this.x = x;
+}
 
-BULANCI.Player.prototype.getY = function() { return this.y; }
+BULANCI.Player.prototype.getY = function() {
+    return this.y;
+}
 
-BULANCI.Player.prototype.setY = function(pY) { this.y = pY; }
+BULANCI.Player.prototype.setY = function(y) {
+    this.y = y;
+}
 
 BULANCI.Player.prototype.getShoots = function() {
     return this.shoots;
