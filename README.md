@@ -3,7 +3,8 @@ bulanci-html5
 
 Bulánci - online html5 version (school project)
 
-dropbox sources: [https://www.dropbox.com/sh/w6ck6lnvz3dll0e/yCcliFFJCX](https://www.dropbox.com/sh/w6ck6lnvz3dll0e/yCcliFFJCX)
+## DEMO
+* [http://vlcekmi3.github.io/bulanci-html5/](http://vlcekmi3.github.io/bulanci-html5/)
 
 ## INSTALLATION
 * unzip & doubleclick ``` index.html ```
