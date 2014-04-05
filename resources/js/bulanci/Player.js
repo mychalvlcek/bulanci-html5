@@ -43,15 +43,19 @@ BULANCI.Player.prototype.death = function() {
     this.deaths++;
 }
 
-BULANCI.Player.prototype.respawn = function(maxWidth, maxHeight) {
+BULANCI.Player.prototype.respawn = function(maxWidth, maxHeight, obstacles) {
     this.x = -100;
     this.y = -100;
-    setTimeout(this.spawn.bind(this, maxWidth, maxHeight), 500);
+    setTimeout(this.spawn.bind(this, maxWidth, maxHeight, obstacles), 500);
 }
 
-BULANCI.Player.prototype.spawn = function(maxWidth, maxHeight) {
+BULANCI.Player.prototype.spawn = function(maxWidth, maxHeight, obstacles) {
     this.x = Math.random() * (maxWidth - 150) + 50;
     this.y = Math.random() * (maxHeight - 150) + 50;
+    while(this.hasCollision(this.x, this.y, obstacles)) {
+        this.x = Math.random() * (maxWidth - 150) + 50;
+        this.y = Math.random() * (maxHeight - 150) + 50;
+    }
     this.isAlive = true;
 }
 
@@ -84,7 +88,6 @@ BULANCI.Player.prototype.move = function(key, canvas, obstacles) {
 BULANCI.Player.prototype.hasCollision = function(x, y, obstacles) {
     for(i = 0; i < obstacles.length; i++) {
         var r = obstacles[i];
-        console.log(this == r);
         if(this != r) {
             if ( x + this.width < r.x || r.x + r.width < x || y + this.height < r.y || r.y + r.height < y ) {
             } else {

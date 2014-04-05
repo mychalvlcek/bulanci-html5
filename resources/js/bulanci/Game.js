@@ -97,12 +97,13 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     // this.elementList.push(this.map);
 
     var bulanek = new BULANCI.Player('-red');
-    bulanek.spawn(this.width, this.height);
+    bulanek.spawn(this.width, this.height, []);
     this.players.push(bulanek);
     
     bulanek = new BULANCI.Player('-blue');
-    bulanek.setX(Math.random() * (this.width - 150) + 50);
-    bulanek.setY(Math.random() * (this.height - 150) + 50);
+    bulanek.spawn(this.width, this.height, []);
+    //bulanek.setX(Math.random() * (this.width - 150) + 50);
+    //bulanek.setY(Math.random() * (this.height - 150) + 50);
     this.players.push(bulanek);
 
     this.elementList = this.elementList.concat(this.players);
@@ -143,7 +144,7 @@ BULANCI.Game.prototype.update = function() {
                     shoots[s].setIsActive(false);
                     this.players[i].setScore();
                     this.players[p].death();
-                    this.players[p].respawn(this.width, this.height);
+                    this.players[p].respawn(this.width, this.height, this.elementList);
                 }
             }
         }
