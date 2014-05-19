@@ -33,7 +33,7 @@ je zde samozrejme prostor pro dalsi vychytavky:
 * barevnost bulanku (multi images vs. [one image](http://www.html5canvastutorials.com/advanced/html5-canvas-invert-image-colors-tutorial/))
 * animace pohybu bulanku pres image sprite
 * lepsi stin bulanku
-* * ~~kolize (hracu mezi sebou)~~
+* ~~kolize (hracu mezi sebou)~~
 * zpresnit hitbox
 * nahodne prekazky na mape
 * offline app (manifest)
