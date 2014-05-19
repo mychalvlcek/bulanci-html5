@@ -2,7 +2,7 @@
 * Constructs Background object
 * @class Background
 * @constructor
-* @author Michal Vlcek <vlcekmichal@yahoo.com>
+* @author Michal Vlcek <mychalvlcek@gmail.com>
 */
 BULANCI.Background = function() {
 }

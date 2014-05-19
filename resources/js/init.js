@@ -9,13 +9,6 @@ var meny = Meny.create({
     mouse: true, // [optional] Use mouse movement to automatically open/close
     touch: true // [optional] Use touch swipe events to open/close
 });
-// API Methods:
-// meny.open();
-// meny.close();
-// meny.isOpen();
-// Events:
-// meny.addEventListener( 'open', function(){ console.log( 'open' ); } );
-// meny.addEventListener( 'close', function(){ console.log( 'close' ); } );
 
 // Embed an iframe if a URL is passed in
 if( Meny.getQuery().u && Meny.getQuery().u.match( /^http/gi ) ) {
@@ -28,16 +21,15 @@ if( Meny.getQuery().u && Meny.getQuery().u.match( /^http/gi ) ) {
 document.addEventListener('DOMContentLoaded', function() {
     var game = new BULANCI.Game(true);
     game.init(document.getElementById('game'), window.innerWidth, window.innerHeight);
-
-    window.onresize = function() {
+    window.addEventListener('resize', function() {
         game.resize();
-    }
+    });
 
-    window.onclick  = function() {
-        //handleMouseDown);
-    }
-    window.onmousemove = function(e) {
-        //handleMouseMove);
+    window.addEventListener('click', function() {
+
+    });
+
+    window.addEventListener('mousemove', function(e) {
         game.handleMouseMove(e);
-    }
+    });
 });

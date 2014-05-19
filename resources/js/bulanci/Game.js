@@ -3,7 +3,7 @@
  *
  * @class Game
  * @constructor
- * @author Michal Vlcek <vlcekmichal@yahoo.com>
+ * @author Michal Vlcek <mychalvlcek@gmail.com>
  */
 BULANCI.Game = function(debug) {
     this.debug = debug;
@@ -102,8 +102,6 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     
     bulanek = new BULANCI.Player('-blue');
     bulanek.spawn(this.width, this.height, []);
-    //bulanek.setX(Math.random() * (this.width - 150) + 50);
-    //bulanek.setY(Math.random() * (this.height - 150) + 50);
     this.players.push(bulanek);
 
     this.elementList = this.elementList.concat(this.players);
@@ -131,7 +129,10 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     this.hud.elements['time'] = time;
 }
 
-// main loop
+/**
+ * Main loop of the game.
+ * All of the logic is processed here.
+ */
 BULANCI.Game.prototype.update = function() {
     ++this.numFramesDrawn;
 
@@ -156,6 +157,7 @@ BULANCI.Game.prototype.update = function() {
         this.redraw();
     } else {
         // END GAME
+        // RESULTS
         this.map.draw(this.context, this.images);
         this.context.rect(0, 0, this.width, this.height);
         this.context.fillStyle = 'rgba(0,0,0,0.8)';
@@ -215,23 +217,18 @@ BULANCI.Game.prototype.redraw = function() {
     this.clearCanvas();
     // redraw map
     this.map.draw(this.context, this.images);
+    // redraw hud
+    // hud.redraw(context);
+    this.hud.elements['score1'].redraw(this.context, 'score: ' + this.players[0].getScore(), 20, this.height-50);
+    this.hud.elements['score2'].redraw(this.context, 'score: ' + this.players[1].getScore(), 140, this.height-50);
+    this.hud.elements['pause_btn'].redraw(this.context, '', this.width-120, this.height-50);
 
-    if(this.remainingTime > 0) {
-        // redraw hud
-        // hud.redraw(context);
-        this.hud.elements['score1'].redraw(this.context, 'score: ' + this.players[0].getScore(), 20, this.height-50);
-        this.hud.elements['score2'].redraw(this.context, 'score: ' + this.players[1].getScore(), 140, this.height-50);
-        this.hud.elements['pause_btn'].redraw(this.context, '', this.width-120, this.height-50);
+    // remaining time
+    this.hud.elements['time'].redraw(this.context, this.remainingTime.toTimeRemain(), this.width / 2 - 50, this.height-50);
 
-        // remaining time
-        this.hud.elements['time'].redraw(this.context, this.remainingTime.toTimeRemain(), this.width / 2 - 50, this.height-50);
-
-        // redraw players
-        for(var i = 0; i < this.players.length; i++) {
-            this.players[i].draw(this.context, this.images);
-        }
-    } else {
-
+    // redraw players
+    for(var i = 0; i < this.players.length; i++) {
+        this.players[i].draw(this.context, this.images);
     }
 
     if(this.debug) {
@@ -280,31 +277,6 @@ BULANCI.Game.prototype.clearCanvas = function() {
     this.canvas.width = this.canvas.width;
 }
 
-BULANCI.Game.prototype.keyBind = function() {
-    var directions = { 
-        65: 1, 87: 2 ,68: 3, 83: 4,
-        37: 1, 38: 2 ,39: 3, 40: 4
-    };
-
-    for (var i in this.keys) {
-        if (!this.keys.hasOwnProperty(i)) continue;
-
-        if(i == 13) { // enter
-            this.players[1].shoot(i);
-        }
-        if(i == 32) { // spacebar
-            this.players[0].shoot(i);
-        }
-        if(i >= 37 && i <= 40) { // arrows
-            this.players[1].move(directions[i], this.canvas, this.elementList);
-        }
-        if(i == 65 || i == 68 || i == 83 || i == 87) { // WSAD
-            this.players[0].move(directions[i], this.canvas, this.elementList);
-        }
-
-    }
-}
-
 BULANCI.Game.prototype.start = function() {
     this.remainingTime = this.gametime;
     this.frameInterval = setInterval(this.update.bind(this), 1000/this.fps);
@@ -333,7 +305,7 @@ BULANCI.Game.prototype.loadImages = function() {
     for(i = 0; i < this.resources.length; i++) {
         var name = this.resources[i];
         this.images[name] = new Image();
-        this.images[name].onload = this.resourceLoaded();
+        this.images[name].addEventListener('load', this.resourceLoaded(), false);
         this.images[name].src = this.imagePath + name;
     }
 }
@@ -343,6 +315,30 @@ BULANCI.Game.prototype.updateFPS = function() {
     this.numFramesDrawn = 0;
     if(this.remainingTime > 0)
         this.remainingTime--;
+}
+
+BULANCI.Game.prototype.keyBind = function() {
+    var directions = { 
+        65: 1, 87: 2 ,68: 3, 83: 4,
+        37: 1, 38: 2 ,39: 3, 40: 4
+    };
+
+    for (var i in this.keys) {
+        if (!this.keys.hasOwnProperty(i)) continue;
+        if(i == 13) { // enter
+            this.players[1].shoot();
+        }
+        if(i == 32) { // spacebar
+            this.players[0].shoot();
+        }
+        if(i >= 37 && i <= 40) { // arrows
+            this.players[1].move(directions[i], this.canvas, this.elementList);
+        }
+        if(i == 65 || i == 68 || i == 83 || i == 87) { // WSAD
+            this.players[0].move(directions[i], this.canvas, this.elementList);
+        }
+
+    }
 }
 
 BULANCI.Game.prototype.keyboardPressed = function(e) {

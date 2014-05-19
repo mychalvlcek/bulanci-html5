@@ -1,9 +1,9 @@
 /**
-* Shoot of player
-* @class Shoot
-* @constructor
-* @author Michal Vlcek <vlcekmichal@yahoo.com>
-*/
+ * Shoot of player
+ * @class Shoot
+ * @constructor
+ * @author Michal Vlcek <mychalvlcek@gmail.com>
+ */
 BULANCI.Shoot = function(x, y) {
     this.x = x;
     this.y = y;

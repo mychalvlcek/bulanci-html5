@@ -3,7 +3,7 @@
  *
  * @class Player
  * @constructor
- * @author Michal Vlcek <vlcekmichal@yahoo.com>
+ * @author Michal Vlcek <mychalvlcek@gmail.com>
  */
 BULANCI.Player = function(suffix) {
     // coordinates
@@ -16,7 +16,7 @@ BULANCI.Player = function(suffix) {
     //var max
 
     this.direction = 1;
-    this.moveInc = 8; // moving increment (in pixels)
+    this.moveInc = 8; // moving increment
 
     this.spritePosition = 0;
     this.imageSuffix = suffix || '';
@@ -39,6 +39,7 @@ BULANCI.Player = function(suffix) {
 }
 
 BULANCI.Player.prototype.death = function() {
+    // add hit-sound here
     this.isAlive = false;
     this.deaths++;
 }
@@ -104,8 +105,13 @@ BULANCI.Player.prototype.activeShooting = function() {
     }
 }
 
-BULANCI.Player.prototype.shoot = function() {
+BULANCI.Player.prototype.shoot = function(a) {
     if(this.shooting === false) {
+        new Howl({
+            urls: ['resources/audio/shoot.mp3'],
+            buffer: true
+        }).play();
+        
         shoot = new BULANCI.Shoot(this.x, this.y);
         shoot.launch(this.shootSpeed, this.direction); // gun.speed
         this.shoots.push(shoot);
@@ -259,11 +265,6 @@ BULANCI.Player.prototype.drawShadow = function(context) {
             context.closePath();
             break;
     }
-
-  // ctx.beginPath();
-  // ctx.moveTo(148 + xoff, 173 + yoff);
-  // ctx.bezierCurveTo(148 + xoff, 214 + yoff, 346 + xoff, 223 + yoff, 357 + xoff, 178 + yoff);
-  // ctx.stroke();
 
 }
 

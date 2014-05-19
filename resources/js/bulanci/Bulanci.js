@@ -1,7 +1,7 @@
 /**
 * Bulanci-html5 online game
 *
-* @author Michal Vlcek <vlcekmichal@yahoo.com>
+* @author Michal Vlcek <mychalvlcek@gmail.com>
 * @version 0.1
 */
 var BULANCI = BULANCI || {};

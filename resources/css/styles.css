@@ -75,7 +75,6 @@ body .glyph {
 #meny {
   display: none;
   padding: 20px;
-  overflow: auto;
   background: #111111;
   color: #eee;
   -webkit-box-sizing: border-box;

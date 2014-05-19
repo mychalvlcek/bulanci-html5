@@ -1,16 +1,15 @@
 // audio
-var a = document.createElement('audio');
-document.body.insertBefore(a, document.body.firstChild);
+var a = new Audio();
 
 if(a.canPlayType('audio/mpeg'))
     a.src = 'resources/audio/gyears.mp3';
-// a.play();
+a.play();
 // a.pause();
-
-document.getElementById('toggle-audio').onclick = function() { 
+// 
+document.getElementById('toggle-audio').addEventListener('click', function() { 
 	if(a.paused) {
 		a.play();
 	} else {
 		a.pause();
 	}
-}
+});

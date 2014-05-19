@@ -235,15 +235,17 @@
                     C199.796,18.46,199.434,18.905,199.072,19.349z"/>
             </g>
         </svg>
-   <!--      <ul>
-            <li><a href="http://seznam.cz" title="adf">o hře</a></li>
-            <li><a href="http://seznam.cz" title="adf">původ</a></li>
-            <li><a href="http://seznam.cz" title="adf">originál</a></li>
-            <li><a href="http://seznam.cz" title="adf">multiplayer</a></li>
-            <li><a href="http://seznam.cz" title="adf">jazyk</a></li>
-            <li><a href="http://seznam.cz" title="adf">editor map</a></li>
-            <li><a href="http://seznam.cz" title="adf">soundtrack</a></li>
-        </ul> -->
+        <nav>
+            <ul>
+                <li><a href="#" title="adf">o hře</a></li>
+                <li><a href="#" title="adf">původ</a></li>
+                <li><a href="#" title="adf">originál</a></li>
+                <li><a href="#" title="adf">multiplayer</a></li>
+                <li><a href="#" title="adf">jazyk</a></li>
+                <li><a href="#" title="adf">editor map</a></li>
+                <li><a href="#" title="adf">soundtrack</a></li>
+            </ul>
+        </nav>
         <hr />
         <p>
             “Bulánci jsou dravé polštáře bez morálky, slitování a zábran, jež v neukojitelné touze po peří střílejí do zad a vraždí bezbranné. I přesto jsou velmi populární...”
@@ -258,20 +260,20 @@
         </div>
 
         <footer id="footer">
-            <address role="complementary">
-                <p class="author">Michal Vlček &copy; 2014</p>
-                <p class="about">vlcekmi3@fel.cvut.cz</p>
+            <address role="complementary" itemscope itemtype="http://schema.org/Person">
+                <p class="author"><span itemprop="name">Michal Vlček</span> &copy; 2014</p>
+                <p class="about" itemprop="email">vlcekmi3@fel.cvut.cz</p>
             </address>
         </footer>
     </div>
     <div class="meny-arrow"></div>
 
-    <div id="content">
-        <div id="game">
-        </div>
-    </div>
+    <section id="content">
+        <div id="game"></div>
+    </section>
 
     <!-- imports & JS -->
+    <script src="resources/js/lib/howler.min.js"></script>
     <script src="resources/js/lib/meny.min.js"></script>
     <script src="resources/js/lib/array.polyfill.js"></script>
     <script src="resources/js/lib/string.polyfill.js"></script>
