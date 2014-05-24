@@ -5,6 +5,7 @@
 * @author Michal Vlcek <mychalvlcek@gmail.com>
 */
 BULANCI.Map = function() {
+	this.obstacles = [];
 }
         
 BULANCI.Map.prototype.draw = function(context, images) {

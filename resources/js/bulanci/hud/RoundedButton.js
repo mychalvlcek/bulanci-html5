@@ -14,7 +14,7 @@ BULANCI.RoundedButton = function(text, x, y, width, height, radius, stroke, fill
     this.stroke = stroke  || 'rgb(68,68,68)';
     this.fill = fill  || 'rgba(0,0,0,0.2)';
 
-    this.hide = false;
+    this.isHide = false;
 
     this.hovered = false;
     this.clickable = true;
@@ -22,15 +22,15 @@ BULANCI.RoundedButton = function(text, x, y, width, height, radius, stroke, fill
 };
 
 BULANCI.RoundedButton.prototype.isHidden = function() {
-    return this.hide;
+    return this.isHide;
 };
 
-BULANCI.RoundedButton.prototype.setHide = function() {
-    this.hide = true;
+BULANCI.RoundedButton.prototype.hide = function() {
+    this.isHide = true;
 };
 
 BULANCI.RoundedButton.prototype.show = function() {
-    this.hide = false;
+    this.isHide = false;
 };
 
 BULANCI.RoundedButton.prototype.contains = function(x, y) {
@@ -38,15 +38,17 @@ BULANCI.RoundedButton.prototype.contains = function(x, y) {
 };
 
 BULANCI.RoundedButton.prototype.redraw = function (context, text, x, y) {
-    this.x = x || this.x;
-    this.y = y || this.y;
-    this.text = text || this.text;
-    if(this.hovered) {
-        this.draw(context, this.hoverStroke);
-    } else {
-        this.draw(context, this.stroke);
+    if(!this.isHide) {
+        this.x = x || this.x;
+        this.y = y || this.y;
+        this.text = text || this.text;
+        if(this.hovered) {
+            this.draw(context, this.hoverStroke);
+        } else {
+            this.draw(context, this.stroke);
+        }
+        return (this);
     }
-    return (this);
 }
 
 BULANCI.RoundedButton.prototype.highlight = function (context, x, y) {
@@ -57,7 +59,7 @@ BULANCI.RoundedButton.prototype.highlight = function (context, x, y) {
 }
 
 BULANCI.RoundedButton.prototype.draw = function (context, stroke) {
-    if(!this.hide) {
+    if(!this.isHide) {
         context.save();
         context.beginPath();
         context.moveTo(this.x + this.radius, this.y);

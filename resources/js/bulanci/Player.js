@@ -44,6 +44,12 @@ BULANCI.Player.prototype.death = function() {
     this.deaths++;
 }
 
+BULANCI.Player.prototype.restart = function() {
+    this.score = 0;
+    this.kills = 0;
+    this.deaths = 0;
+}
+
 BULANCI.Player.prototype.respawn = function(maxWidth, maxHeight, obstacles) {
     this.x = -100;
     this.y = -100;
@@ -106,7 +112,7 @@ BULANCI.Player.prototype.activeShooting = function() {
 }
 
 BULANCI.Player.prototype.shoot = function(a) {
-    if(this.shooting === false) {
+    if(this.shooting === false && this.isAlive) {
         new Howl({
             urls: ['resources/audio/shoot.mp3'],
             buffer: true

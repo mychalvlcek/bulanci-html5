@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
         game.resize();
     });
 
-    window.addEventListener('click', function() {
-
+    window.addEventListener('click', function(e) {
+        game.handleMouseClick(e);
     });
 
     window.addEventListener('mousemove', function(e) {

@@ -25,8 +25,10 @@ BULANCI.Game = function(debug) {
     this.numFramesDrawn = 0;
     this.curFPS = 0;
 
-    this.gametime = 90; // sec
-    this.remainingTime = 90;
+    this.status = 0;
+
+    this.defaultGametime = 60; // sec
+    this.remainingTime = -1;
 
     this.speed = 15;
     
@@ -86,6 +88,8 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
 
     this.resources.push('grass.jpg');
 
+    this.resources.push('logo.png');
+
     this.loadImages();
 
     document.addEventListener('keydown', this.keyboardPressed.bind(this));
@@ -127,6 +131,17 @@ BULANCI.Game.prototype.init = function(gameDiv, pCanvas, pheight) {
     time.font = '26px "Helvetica"';
     time.textColor = 'rgba(255,255,255,.8)';
     this.hud.elements['time'] = time;
+
+    // main menu
+    var newGame = new BULANCI.RoundedButton('New game', this.width / 2 - 100, this.height / 2 - 100, 200, 100);
+    newGame.font = '26px "Helvetica"';
+    newGame.textColor = 'rgba(255,255,255,.8)';
+    this.hud.elements['newGame'] = newGame;
+
+    var again = new BULANCI.RoundedButton('Play again?', this.width / 2 - 100, this.height / 2 - 100, 200, 100);
+    again.font = '26px "Helvetica"';
+    again.textColor = 'rgba(255,255,255,.8)';
+    this.hud.elements['again_btn'] = again;
 }
 
 /**
@@ -151,66 +166,106 @@ BULANCI.Game.prototype.update = function() {
         }
     }
 
-    if(this.remainingTime > 0) {
-        this.keyBind();
-    
-        this.redraw();
+    if(this.status == 0) {
+        // start screen
+        this.drawMenu();
+        // this.status = 1;
     } else {
-        // END GAME
-        // RESULTS
-        this.map.draw(this.context, this.images);
-        this.context.rect(0, 0, this.width, this.height);
-        this.context.fillStyle = 'rgba(0,0,0,0.8)';
-        this.context.fill();
+        // new game
+        if(this.remainingTime > 0) {
+            this.keyBind();
+        
+            this.redraw();
+        } else {
+            // END GAME
+            this.drawResults();
+        }
+    }         
+}
 
-        this.context.font = '20px "Helvetica"';
-        this.context.fillStyle = 'rgba(230,230,230,1)';
-        this.context.fontWeight = '300';
-        this.context.textAlign = 'center';
-        this.context.textBaseline = 'middle';
+BULANCI.Game.prototype.drawMenu = function() {
+    this.map.draw(this.context, this.images);
+    this.context.rect(0, 0, this.width, this.height);
+    this.context.fillStyle = 'rgba(0,0,0,0.8)';
+    this.context.fill();
 
-        this.context.fillText('Game over!', this.width / 2, this.height / 2 - 50);
+    // font
+    this.context.font = '40px "Bank Gothic"';
+    this.context.fillStyle = 'rgba(230,230,230,1)';
+    this.context.fontWeight = '300';
+    this.context.textAlign = 'center';
+    this.context.textBaseline = 'middle';
 
-        this.context.beginPath();
-        this.context.rect(this.width / 2 - 100, this.height / 2, 200, 100);
-        this.context.strokeStyle = 'rgb(120,120,120)';
-        this.context.lineWidth = 2;
-        this.context.stroke();
+    // logo
+    this.context.fillText('Bulánci', this.width / 2, 50);
+    this.context.drawImage(this.images['logo.png'], this.width / 2 - 100, 100, 300, 161);
 
-        this.context.fillText('Play again?', this.width / 2, this.height / 2 + 50);
+    this.context.font = '20px "Helvetica"';
 
-        heightRatio = this.height / 3;
-        this.context.font = '30px "Helvetica"';
+    var y = this.height / 3;
+    this.context.fillStyle = 'rgba(255,0,0,0.6)';
+    this.context.fillText('Player 1 controls:', this.width / 4, y);
+    y += 40;
+    this.context.fillText('WASD + spacebar', this.width / 4, y);
 
-        var totalScore = this.players[0].getScore() + this.players[1].getScore();
-        var score1Height = this.players[0].getScore() * (heightRatio/totalScore);
-        var score2Height = this.players[1].getScore() * (heightRatio/totalScore);
-        // score 1
-        this.context.beginPath();
-        this.context.rect(this.width / 4 - 50, this.height / 5 * 3, 100, -1 * score1Height );
-        this.context.strokeStyle = 'rgba(255,0,0,0.8)';
-        this.context.lineWidth = 2;
-        this.context.stroke();
-        this.context.fillStyle = 'rgba(255,0,0,0.2)';
-        this.context.fill();
+    y = this.height / 3;
+    this.context.fillStyle = 'rgba(0,0,255,0.6)';
+    this.context.fillText('Player 2 controls:', this.width / 4 * 3, y);
+    y += 40;
+    this.context.fillText('arrows + enter', this.width / 4 * 3, y);
 
-        this.context.fillStyle = 'rgba(255,0,0,0.5)';
-        this.context.fillText(this.players[0].getScore(), this.width / 4, this.height / 4 * 3 );
+    // new game button
+    this.hud.elements['newGame'].redraw(this.context, '', this.width / 2 - 100, this.height / 2 - 100);
 
-        // score 2
-        heightRatio = this.height / 3;
-        this.context.beginPath();
-        this.context.rect(this.width / 4 * 3 - 50, this.height / 5 * 3, 100, -1 * score2Height );
-        this.context.strokeStyle = 'rgba(0,0,255,0.8)';
-        this.context.lineWidth = 2;
-        this.context.stroke();
-        this.context.fillStyle = 'rgba(0,0,255,0.2)';
-        this.context.fill();
+}
 
-        this.context.fillStyle = 'rgba(0,0,255,0.5)';
-        this.context.fillText(this.players[1].getScore(), this.width / 4 * 3, this.height / 4 * 3 );
-    }
-          
+BULANCI.Game.prototype.drawResults = function() {
+    // RESULTS
+    this.map.draw(this.context, this.images);
+    this.context.rect(0, 0, this.width, this.height);
+    this.context.fillStyle = 'rgba(0,0,0,0.8)';
+    this.context.fill();
+
+    this.context.font = '20px "Helvetica"';
+    this.context.fillStyle = 'rgba(230,230,230,1)';
+    this.context.fontWeight = '300';
+    this.context.textAlign = 'center';
+    this.context.textBaseline = 'middle';
+
+    this.context.fillText('Game over!', this.width / 2, this.height / 2 - 150);
+
+    this.hud.elements['again_btn'].redraw(this.context, '', this.width / 2 - 100, this.height / 2 - 100);
+
+    heightRatio = this.height / 3;
+    this.context.font = '30px "Helvetica"';
+
+    var totalScore = this.players[0].getScore() + this.players[1].getScore();
+    var score1Height = this.players[0].getScore() * (heightRatio/totalScore);
+    var score2Height = this.players[1].getScore() * (heightRatio/totalScore);
+    // score 1
+    this.context.beginPath();
+    this.context.rect(this.width / 4 - 50, this.height / 5 * 3, 100, -1 * score1Height );
+    this.context.strokeStyle = 'rgba(255,0,0,0.8)';
+    this.context.lineWidth = 2;
+    this.context.stroke();
+    this.context.fillStyle = 'rgba(255,0,0,0.2)';
+    this.context.fill();
+
+    this.context.fillStyle = 'rgba(255,0,0,0.5)';
+    this.context.fillText(this.players[0].getScore(), this.width / 4, this.height / 4 * 3 );
+
+    // score 2
+    heightRatio = this.height / 3;
+    this.context.beginPath();
+    this.context.rect(this.width / 4 * 3 - 50, this.height / 5 * 3, 100, -1 * score2Height );
+    this.context.strokeStyle = 'rgba(0,0,255,0.8)';
+    this.context.lineWidth = 2;
+    this.context.stroke();
+    this.context.fillStyle = 'rgba(0,0,255,0.2)';
+    this.context.fill();
+
+    this.context.fillStyle = 'rgba(0,0,255,0.5)';
+    this.context.fillText(this.players[1].getScore(), this.width / 4 * 3, this.height / 4 * 3 );
 }
 
 BULANCI.Game.prototype.redraw = function() {
@@ -241,7 +296,7 @@ BULANCI.Game.prototype.handleMouseMove = function(e) {
     this.mouseY = parseInt(e.clientY);
 
     for (var key in this.hud.elements) {
-        if(this.hud.elements[key].contains(this.mouseX,this.mouseY) && this.hud.elements[key].clickable) {
+        if(this.hud.elements[key].contains(this.mouseX,this.mouseY) && this.hud.elements[key].clickable && !this.hud.elements[key].isHidden()) {
             window.document.body.style.cursor = 'pointer';
             this.hud.elements[key].hovered = true;
         } else {
@@ -251,6 +306,31 @@ BULANCI.Game.prototype.handleMouseMove = function(e) {
     }
 }
 
+BULANCI.Game.prototype.handleMouseClick = function(e) {
+    this.mouseX = parseInt(e.clientX);
+    this.mouseY = parseInt(e.clientY);
+
+    for (var key in this.hud.elements) {
+        if(this.hud.elements[key].contains(this.mouseX,this.mouseY) && this.hud.elements[key].clickable) {
+            this.hud.elements[key].hovered = true;
+            if(key == 'newGame') {
+                this.status = 1;
+                this.hud.elements[key].hide();
+            }
+
+            if(key == 'again_btn') {
+                this.restart();
+                for(i = 0; i < this.players.length; i++) {
+                    this.players[i].restart();
+                }
+            }
+
+            if(key == 'pause_btn') {
+                console.log('paused');
+            }
+        }
+    }
+}
 
 BULANCI.Game.prototype.printDebugInfo = function() {
     this.context.fillStyle = 'rgba(0,0,0,0.6)';
@@ -261,11 +341,10 @@ BULANCI.Game.prototype.printDebugInfo = function() {
     this.context.fillText('version ' + BULANCI.VERSION, 20, 30);
     // fps
     this.context.font = '12px "Helvetica"';
-    this.context.fillText('FPS: ' + this.curFPS + '/' + this.fps + ' (' + this.numFramesDrawn + ')', 20, 45);
 
     var html = '';
-    var y = 80;
-    this.context.fillText('pressed keys: ', 20, 60);
+    var y = 60;
+    this.context.fillText('pressed keys: ', 20, 45);
     for (var i in this.keys) {
         if (!this.keys.hasOwnProperty(i)) continue;
         this.context.fillText(i, 20, y);
@@ -278,15 +357,25 @@ BULANCI.Game.prototype.clearCanvas = function() {
 }
 
 BULANCI.Game.prototype.start = function() {
-    this.remainingTime = this.gametime;
+    this.remainingTime = this.defaultGametime;
     this.frameInterval = setInterval(this.update.bind(this), 1000/this.fps);
     this.fpsInterval = setInterval(this.updateFPS.bind(this), 1000);
 }
 
-BULANCI.Game.prototype.end = function() {
-    // remainingTime = gametime;
-    // frameInterval = setInterval(update, 1000/fps);
-    // fpsInterval = setInterval(updateFPS, 1000);
+BULANCI.Game.prototype.restart = function() {
+    this.remainingTime = this.defaultGametime;
+    this.status = 1;
+}
+
+BULANCI.Game.prototype.setGametime = function(time) {
+    localStorage.setItem('gametime', time);
+}
+
+BULANCI.Game.prototype.getGametime = function() {
+    if (localStorage.getItem('gametime') === null) {
+        localStorage.setItem('gametime', this.defaultGametime);
+    }
+    return localStorage.getItem('gametime');
 }
 
 /**
@@ -313,7 +402,7 @@ BULANCI.Game.prototype.loadImages = function() {
 BULANCI.Game.prototype.updateFPS = function() {
     this.curFPS = this.numFramesDrawn;
     this.numFramesDrawn = 0;
-    if(this.remainingTime > 0)
+    if(this.status == 1 && this.remainingTime > 0)
         this.remainingTime--;
 }
 
