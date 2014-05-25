@@ -49,7 +49,7 @@ body {
   font-family: 'Helvetica Neue';
   font-weight: 200;
   background-color: #222222;
-  background-image: url(../images/bulanci-logo.png);
+  background-image: url('../images/bulanci-logo.png');
   background-position: right -400px center, center center;
   background-repeat: no-repeat, repeat;
 }
