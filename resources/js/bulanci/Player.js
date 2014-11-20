@@ -6,6 +6,8 @@
  * @author Michal Vlcek <mychalvlcek@gmail.com>
  */
 BULANCI.Player = function(suffix) {
+    BULANCI.Player._superClass.constructor.call(this);
+
     // coordinates
     this.x = 50;
     this.y = 50;
@@ -37,6 +39,7 @@ BULANCI.Player = function(suffix) {
     // this.weapons = [];
     // this.activeWeapon = weapons[0];
 }
+inherits(BULANCI.Player, BULANCI.GameObject);
 
 BULANCI.Player.prototype.death = function() {
     // add hit-sound here
@@ -282,22 +285,6 @@ BULANCI.Player.prototype.isShootedBy = function(x1, y1) {
         }
     }
     return false;
-}
-
-BULANCI.Player.prototype.getX = function() {
-    return this.x;
-}
-
-BULANCI.Player.prototype.setX = function(x) {
-    this.x = x;
-}
-
-BULANCI.Player.prototype.getY = function() {
-    return this.y;
-}
-
-BULANCI.Player.prototype.setY = function(y) {
-    this.y = y;
 }
 
 BULANCI.Player.prototype.getShoots = function() {
