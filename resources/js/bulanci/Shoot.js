@@ -5,6 +5,8 @@
  * @author Michal Vlcek <mychalvlcek@gmail.com>
  */
 BULANCI.Shoot = function(x, y) {
+    BULANCI.Shoot._superClass.constructor.call(this);
+
     this.x = x;
     this.y = y;
     this.direction;
@@ -23,6 +25,7 @@ BULANCI.Shoot = function(x, y) {
 
     this.updateTimer = setInterval(this.updateShoot.bind(this), 1000/30);
 }
+inherits(BULANCI.Shoot, BULANCI.GameObject);
 
 BULANCI.Shoot.prototype.launch = function(pSpeed, pDirection) {
     this.speed = pSpeed;
@@ -80,22 +83,6 @@ BULANCI.Shoot.prototype.draw = function(context) {
     // shadow
     context.fillStyle = 'rgba(0,0,0,0.1)';
     context.fillRect(this.x,this.y+6,this.width,this.height);
-}
-
-BULANCI.Shoot.prototype.getX = function() {
-    return this.x;
-}
-
-BULANCI.Shoot.prototype.setX = function(x) {
-    this.x = x;
-}
-
-BULANCI.Shoot.prototype.getY = function() {
-    return this.y;
-}
-
-BULANCI.Shoot.prototype.setY = function(y) {
-    this.y = y;
 }
 
 BULANCI.Shoot.prototype.setIsActive = function(isActive) {
