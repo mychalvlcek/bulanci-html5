@@ -10,7 +10,7 @@ limit je stanoven na 90 s. Po skonceni limitu je zobrazen vysledek hry.
 
 
 ## DEMO
-* [http://vlcekmi3.github.io/bulanci-html5/](http://vlcekmi3.github.io/bulanci-html5/)
+* [http://mychalvlcek.github.io/bulanci-html5/](http://mychalvlcek.github.io/bulanci-html5/)
 
 ## POPIS FUNKCNOSTI
 Objektu `Game` predam canvas, do ktereho se hra bude vykreslovat, 
